@@ -73,16 +73,25 @@ def main():
     evidence = Path('pilot-output')
     evidence.mkdir(exist_ok=True)
     report = {'requested_url': URL, 'snapshot_date': DAY,
-              'coverage_status': 'unverified', 'observations': [], 'access_errors': []}
+              'coverage_status': 'unverified', 'observations': [], 'access_errors': [],
+              'failed_requests': [], 'http_errors': [], 'javascript_errors': [],
+              'console_errors': [], 'minimum_expected_models': 500}
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={'width': 1440, 'height': 1000})
 
         def response_seen(response):
+            if response.status >= 400:
+                report['http_errors'].append({'url': response.url, 'status': response.status})
             if response.status in (403, 429):
                 report['access_errors'].append({'url': response.url, 'status': response.status})
 
         page.on('response', response_seen)
+        page.on('requestfailed', lambda request: report['failed_requests'].append(
+            {'url': request.url, 'failure': request.failure}))
+        page.on('pageerror', lambda error: report['javascript_errors'].append(str(error)))
+        page.on('console', lambda message: report['console_errors'].append(message.text)
+                if message.type == 'error' else None)
         try:
             response = page.goto(URL, wait_until='domcontentloaded', timeout=90000)
             report['http_status'] = response.status if response else None
@@ -115,6 +124,9 @@ def main():
                 writer.writeheader()
                 writer.writerows({k: v if v != '' else 'NA' for k, v in row.items()} for row in rows)
             report['model_count'] = len(rows)
+            report['coverage_status'] = 'incomplete' if len(rows) < 500 else 'unverified'
+            if len(rows) < 500:
+                print('::warning::Incomplete catalog: fewer than 500 models.')
             report['result'] = 'csv_saved'
             report['note'] = 'Coverage is unverified. Stable counts do not establish a complete catalog.'
             print(f'Saved {len(rows)} models; full coverage remains unverified.', flush=True)
@@ -125,6 +137,13 @@ def main():
         finally:
             report['final_url'] = page.url
             report['collected_at'] = datetime.now(timezone.utc).isoformat()
+            try:
+                report['visible_controls'] = page.locator('button, [role=button], select').evaluate_all(
+                    "els => els.filter(e => e.getClientRects().length).map(e => ({text: e.innerText, label: e.getAttribute('aria-label'), disabled: e.disabled}))")
+                report['scroll_containers'] = page.locator('body *').evaluate_all(
+                    "els => els.filter(e => e.clientHeight > 200 && e.scrollHeight > e.clientHeight + 100 && /auto|scroll/.test(getComputedStyle(e).overflowY)).map(e => ({tag: e.tagName, id: e.id, class: e.className, height: e.clientHeight, scrollHeight: e.scrollHeight}))")
+            except Exception as exc:
+                report['diagnostic_error'] = str(exc)
             try:
                 (evidence / 'catalog.html').write_text(page.content(), encoding='utf-8')
                 (evidence / 'catalog-text.txt').write_text(page.locator('body').inner_text(timeout=5000), encoding='utf-8')
