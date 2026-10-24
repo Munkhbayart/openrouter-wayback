@@ -1,0 +1,59 @@
+name: Model activity collection
+run-name: Model activity — ${{ inputs.date }} — batch of ${{ inputs.limit }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Catalog snapshot date (YYYY-MM-DD)
+        default: '2026-07-01'
+        required: true
+        type: string
+      limit:
+        description: Maximum new model variants to check (first test 3; later 100)
+        default: '3'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: openrouter-data-writer
+  cancel-in-progress: false
+
+jobs:
+  activity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 270
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Collect active model activity
+        env:
+          SNAPSHOT_DATE: ${{ inputs.date }}
+          BATCH_LIMIT: ${{ inputs.limit }}
+        run: python -u scripts/activity_batch.py --date "$SNAPSHOT_DATE" --limit "$BATCH_LIMIT" --minutes 220
+      - name: Upload results and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: model-activity-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/model_details/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Save CSV and checkpoints in repository
+        if: always()
+        env:
+          SNAPSHOT_DATE: ${{ inputs.date }}
+        run: |
+          if [ ! -d data/model_details ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/model_details
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Save model activity batch for $SNAPSHOT_DATE"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
