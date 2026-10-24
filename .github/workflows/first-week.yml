@@ -72,4 +72,3 @@ jobs:
           name: wayback-first-week
           path: pilot-output/
           retention-days: 7
-.github/workflows/first-week.yml
