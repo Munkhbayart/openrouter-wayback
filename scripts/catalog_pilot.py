@@ -105,12 +105,16 @@ def main():
               'coverage_status': 'unverified', 'observations': [], 'access_errors': [],
               'failed_requests': [], 'http_errors': [], 'javascript_errors': [],
               'console_errors': [], 'review_threshold_models': 500,
+              'responses': [], 'list_observations': [], 'diagnostic_version': 2,
               'capture_selection': 'one candidate nearest noon UTC; not compared with other captures'}
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={'width': 1440, 'height': 1000})
 
         def response_seen(response):
+            if len(report['responses']) < 1000:
+                report['responses'].append({'url': response.url, 'status': response.status,
+                    'resource_type': response.request.resource_type})
             if response.status >= 400:
                 report['http_errors'].append({'url': response.url, 'status': response.status})
             if response.status in (403, 429):
@@ -130,7 +134,7 @@ def main():
             # Ten-second checks allow an access error to stop the pilot promptly.
             # Accumulate virtualized cards before scrolling the inner list.
             accumulated = {}
-            for step in range(36):
+            for step in range(18):
                 page.wait_for_timeout(10000)
                 if report['access_errors']:
                     raise RuntimeError('Access error: stopping without retry.')
@@ -143,14 +147,27 @@ def main():
                                    'model_count': len(accumulated),
                                    'currently_rendered': len(visible_rows)}
                     report['observations'].append(observation)
-                    print(observation, flush=True)
+                    dimensions = page.evaluate("""() => {
+                        const e = document.querySelector('[data-models-scroll-container]');
+                        if (!e) return {found: false};
+                        const rect = e.getBoundingClientRect();
+                        const ul = e.querySelector('ul');
+                        return {found: true, width: rect.width, height: rect.height,
+                            clientHeight: e.clientHeight, scrollHeight: e.scrollHeight,
+                            scrollTop: e.scrollTop, modelLinks: e.querySelectorAll('a[href]').length,
+                            listChildren: ul ? ul.children.length : null,
+                            listStyle: ul ? ul.getAttribute('style') : null,
+                            overflowY: getComputedStyle(e).overflowY};
+                    }""")
+                    report['list_observations'].append(dict(observation, container=dimensions))
+                    print(dict(observation, container=dimensions), flush=True)
+                    if step in (2, 8, 17):
+                        page.screenshot(path=str(evidence / f'page-{(step+1)*10}s.png'))
+                        (evidence / f'page-{(step+1)*10}s.html').write_text(page.content(), encoding='utf-8')
                 if step >= 5:
                     scroll = page.evaluate("""() => {
-                        const lists = [...document.querySelectorAll('body *')].filter(e =>
-                            e.clientHeight > 200 && e.scrollHeight > e.clientHeight + 100 &&
-                            /auto|scroll/.test(getComputedStyle(e).overflowY));
-                        const e = lists.sort((a,b) => b.scrollHeight-a.scrollHeight)[0]
-                            || document.scrollingElement;
+                        const e = document.querySelector('[data-models-scroll-container="true"]');
+                        if (!e) return {found: false};
                         e.scrollTop += Math.max(300, e.clientHeight * 0.8);
                         return {top: e.scrollTop, height: e.scrollHeight, viewport: e.clientHeight,
                                 at_bottom: e.scrollTop + e.clientHeight >= e.scrollHeight - 5};
@@ -176,7 +193,7 @@ def main():
             if len(rows) < 500:
                 print('::warning::Fewer than 500 models: review archive coverage.')
             report['result'] = 'csv_saved'
-            report['note'] = 'Coverage is unverified. Stable counts do not establish a complete catalog.'
+            report['note'] = 'Diagnostic run only. Coverage is unverified; no full-catalog claim.'
             print(f'Saved {len(rows)} models; full coverage remains unverified.', flush=True)
         except Exception as exc:
             report['result'] = 'failed'
@@ -198,6 +215,7 @@ def main():
                 page.screenshot(path=str(evidence / 'catalog-bottom.png'))
             except Exception:
                 pass
+            (evidence / 'diagnostics.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
             folder = Path('data/coverage')
             folder.mkdir(parents=True, exist_ok=True)
             (folder / f'{DAY}-catalog.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
