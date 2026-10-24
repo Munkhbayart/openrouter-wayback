@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -7,8 +8,10 @@ from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup
 
-URL = 'https://web.archive.org/web/20261018092638/https://openrouter.ai/models'
-DAY = '2026-10-18'
+DAY = os.environ.get('SNAPSHOT_DATE', '2026-10-18')
+# Request the capture nearest noon; reject redirects to another calendar day.
+URL = os.environ.get('SNAPSHOT_URL',
+    f"https://web.archive.org/web/{DAY.replace('-', '')}120000/https://openrouter.ai/models")
 
 
 def original_url(href):
@@ -70,12 +73,13 @@ def parse_cards(html, capture_url, collected_at):
 def main():
     from playwright.sync_api import sync_playwright
 
-    evidence = Path('pilot-output')
-    evidence.mkdir(exist_ok=True)
+    evidence = Path('pilot-output') / DAY
+    evidence.mkdir(parents=True, exist_ok=True)
     report = {'requested_url': URL, 'snapshot_date': DAY,
               'coverage_status': 'unverified', 'observations': [], 'access_errors': [],
               'failed_requests': [], 'http_errors': [], 'javascript_errors': [],
-              'console_errors': [], 'minimum_expected_models': 500}
+              'console_errors': [], 'review_threshold_models': 500,
+              'capture_selection': 'one candidate nearest noon UTC; not compared with other captures'}
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={'width': 1440, 'height': 1000})
@@ -111,7 +115,7 @@ def main():
                     report['observations'].append(observation)
                     print(observation, flush=True)
             report['final_url'] = page.url
-            if not re.search(r'/web/20261018\d{6}/https://openrouter\.ai/models', page.url):
+            if not re.search(rf"/web/{DAY.replace('-', '')}\d{{6}}/https://openrouter\.ai/models", page.url):
                 raise RuntimeError('Wrong-day redirect: refusing to write dated CSV.')
             collected = datetime.now(timezone.utc).isoformat()
             rows = parse_cards(page.content(), page.url, collected)
@@ -124,9 +128,10 @@ def main():
                 writer.writeheader()
                 writer.writerows({k: v if v != '' else 'NA' for k, v in row.items()} for row in rows)
             report['model_count'] = len(rows)
-            report['coverage_status'] = 'incomplete' if len(rows) < 500 else 'unverified'
+            report['coverage_status'] = 'unverified'
+            report['below_review_threshold'] = len(rows) < 500
             if len(rows) < 500:
-                print('::warning::Incomplete catalog: fewer than 500 models.')
+                print('::warning::Fewer than 500 models: review archive coverage.')
             report['result'] = 'csv_saved'
             report['note'] = 'Coverage is unverified. Stable counts do not establish a complete catalog.'
             print(f'Saved {len(rows)} models; full coverage remains unverified.', flush=True)
