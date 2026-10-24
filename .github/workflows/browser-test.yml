@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: wayback-collector
@@ -14,147 +14,27 @@ jobs:
   catalog-pilot:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
-
-      - name: Install browser
+          python-version: '3.12'
+      - name: Install browser and parser
         run: |
-          python -m pip install playwright
+          python -m pip install playwright beautifulsoup4
           python -m playwright install --with-deps chromium
-
-      - name: Inspect one archived catalog
+      - name: Inspect catalog and create CSV
+        run: python -u scripts/catalog_pilot.py
+      - name: Commit CSV and coverage report
+        if: always()
         run: |
-          python -u - <<'PY'
-          import json
-          from pathlib import Path
-          from datetime import datetime, timezone
-          from playwright.sync_api import sync_playwright
-
-          url = (
-              "https://web.archive.org/web/20261018092638/"
-              "https://openrouter.ai/models"
-          )
-          output = Path("pilot-output")
-          output.mkdir(exist_ok=True)
-
-          with sync_playwright() as p:
-              browser = p.chromium.launch(headless=True)
-              page = browser.new_page(
-                  viewport={"width": 1440, "height": 1000}
-              )
-              errors = []
-              metadata = {"requested_url": url}
-
-              def record_response(response):
-                  if response.status in (403, 429):
-                      errors.append({
-                          "status": response.status,
-                          "url": response.url,
-                          "retry_after": response.headers.get("retry-after"),
-                      })
-
-              page.on("response", record_response)
-
-              try:
-                  print("Opening October 18 catalog...")
-                  response = page.goto(
-                      url,
-                      wait_until="domcontentloaded",
-                      timeout=90000,
-                  )
-                  metadata["http_status"] = (
-                      response.status if response else None
-                  )
-
-                  if response and response.status >= 400:
-                      raise RuntimeError(
-                          f"Page returned HTTP {response.status}; stopping."
-                      )
-
-                  print("Allowing up to 3 minutes for loading...")
-                  for interval in range(18):
-                      page.wait_for_timeout(10000)
-                      if errors:
-                          raise RuntimeError(
-                              "Access error detected; stopping without retry."
-                          )
-                      if interval % 3 == 2:
-                          print(
-                              f"Waited {(interval + 1) * 10} seconds."
-                          )
-
-                  page.screenshot(
-                      path=str(output / "catalog-top.png")
-                  )
-
-                  print("Scrolling once to inspect additional loading...")
-                  page.evaluate(
-                      "window.scrollTo(0, document.body.scrollHeight)"
-                  )
-                  page.wait_for_timeout(15000)
-
-                  if errors:
-                      raise RuntimeError(
-                          "Access error detected; stopping without retry."
-                      )
-
-                  text = page.locator("body").inner_text()
-                  (output / "catalog-text.txt").write_text(
-                      text, encoding="utf-8"
-                  )
-                  (output / "catalog.html").write_text(
-                      page.content(), encoding="utf-8"
-                  )
-                  page.screenshot(
-                      path=str(output / "catalog-bottom.png")
-                  )
-
-                  if "/web/20261018" not in page.url:
-                      raise RuntimeError(
-                          "Wayback redirected outside October 18."
-                      )
-
-                  if "DeepSeek" not in text or "tokens" not in text:
-                      raise RuntimeError(
-                          "Expected catalog content was not detected."
-                      )
-
-                  metadata["status"] = "inspection_saved"
-                  print("SUCCESS: Catalog inspection saved.")
-                  print("This does not yet confirm full model coverage.")
-
-              except Exception as exc:
-                  metadata["status"] = "failed"
-                  metadata["error"] = str(exc)
-                  try:
-                      page.screenshot(
-                          path=str(output / "failure.png")
-                      )
-                      (output / "failure-text.txt").write_text(
-                          page.locator("body").inner_text(timeout=5000),
-                          encoding="utf-8",
-                      )
-                  except Exception:
-                      pass
-                  raise
-
-              finally:
-                  metadata["final_url"] = page.url
-                  metadata["access_errors"] = errors
-                  metadata["collected_at"] = datetime.now(
-                      timezone.utc
-                  ).isoformat()
-                  (output / "metadata.json").write_text(
-                      json.dumps(metadata, indent=2),
-                      encoding="utf-8",
-                  )
-                  browser.close()
-          PY
-
+          if [ ! -d data ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/catalog/ data/coverage/ 2>/dev/null || git add data/coverage/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Save October 18 catalog pilot and coverage report'
+          git push
       - name: Save inspection files
         if: always()
         uses: actions/upload-artifact@v7
@@ -162,4 +42,3 @@ jobs:
           name: wayback-catalog-pilot
           path: pilot-output/
           retention-days: 7
-          if-no-files-found: warn
