@@ -1,0 +1,50 @@
+{
+  "requested_url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/models",
+  "snapshot_date": "2026-10-18",
+  "coverage_status": "unverified",
+  "observations": [
+    {
+      "elapsed_seconds": 30,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 60,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 90,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 120,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 150,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 180,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 210,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 240,
+      "model_count": 20
+    },
+    {
+      "elapsed_seconds": 270,
+      "model_count": 20
+    }
+  ],
+  "access_errors": [],
+  "http_status": 200,
+  "final_url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/models",
+  "model_count": 20,
+  "result": "csv_saved",
+  "note": "Coverage is unverified. Stable counts do not establish a complete catalog.",
+  "collected_at": "2026-10-24T03:13:40.319345+00:00"
+}
