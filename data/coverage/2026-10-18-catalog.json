@@ -1,7 +1,7 @@
 {
   "requested_url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/models",
   "snapshot_date": "2026-10-18",
-  "coverage_status": "unverified",
+  "coverage_status": "incomplete",
   "observations": [
     {
       "elapsed_seconds": 30,
@@ -41,10 +41,484 @@
     }
   ],
   "access_errors": [],
+  "failed_requests": [
+    {
+      "url": "https://archive.org/includes/donate.php?as_page=1&platform=wb&referer=https%3A//web.archive.org/web/20261018092638/https%3A//openrouter.ai/models",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/cdn-cgi/challenge-platform/h/b/jsd/oneshot/d2d3316b729e/0.7899419452648745:1792267313:LA5W0mgXC2CjbryofCbfr6o1JQ98MZGA-2icwQ6xYKQ/a4c680ad9abe5f02",
+      "failure": "net::ERR_HTTP2_PROTOCOL_ERROR"
+    }
+  ],
+  "http_errors": [
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638js_/https://openrouter.ai/_next/static/immutable/chunks/1ig66lk3vptko.js",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/cdn-cgi/challenge-platform/h/b/jsd/oneshot/d2d3316b729e/0.7899419452648745:1792267313:LA5W0mgXC2CjbryofCbfr6o1JQ98MZGA-2icwQ6xYKQ/a4c680ad9abe5f02",
+      "status": 404
+    }
+  ],
+  "javascript_errors": [
+    "Failed to load chunk /_next/static/immutable/chunks/1ig66lk3vptko.js from module 236879"
+  ],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: net::ERR_HTTP2_PROTOCOL_ERROR"
+  ],
+  "minimum_expected_models": 500,
   "http_status": 200,
   "final_url": "https://web.archive.org/web/20261018092638/https://openrouter.ai/models",
   "model_count": 20,
   "result": "csv_saved",
   "note": "Coverage is unverified. Stable counts do not establish a complete catalog.",
-  "collected_at": "2026-10-24T03:13:40.319345+00:00"
+  "collected_at": "2026-10-24T03:23:12.188408+00:00",
+  "visible_controls": [
+    {
+      "text": "",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Search\n\u2318\nK",
+      "label": "Search",
+      "disabled": false
+    },
+    {
+      "text": "Models",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Benchmarks",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Chat",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Rankings",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Apps",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Ori",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Pricing",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Docs",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Sign Up",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Dismiss",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "List",
+      "label": "List view",
+      "disabled": false
+    },
+    {
+      "text": "Table",
+      "label": "Table view",
+      "disabled": false
+    },
+    {
+      "text": "All",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Text\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Image\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Video\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Speech\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Decisions\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Embeddings\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Rerank\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Transcription\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "Audio\n0",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": null,
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Copy to clipboard",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Pin model",
+      "disabled": false
+    },
+    {
+      "text": "",
+      "label": "Tokens processed in the last 7 days",
+      "disabled": false
+    }
+  ],
+  "scroll_containers": []
 }
