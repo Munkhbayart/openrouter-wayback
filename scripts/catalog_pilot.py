@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import time
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -68,9 +69,10 @@ def parse_cards(html, capture_url, collected_at):
         release = next((s.get_text(' ', strip=True) for s in card.select('span')
                         if re.fullmatch(r'[A-Z][a-z]{2} \d{1,2}, \d{4}', s.get_text(' ', strip=True))), '')
         usage = re.search(r'\b([\d,.]+\s*[KMBT]?)\s+tokens\b', text)
+        generic_usage = re.search(r'\b([\d,.]+\s*[KMBT]?)\s+(tokens|characters)\b', text)
         input_price = re.search(r'\$\s*([\d,.]+)\s*/M\s*input', text)
         output_price = re.search(r'\$\s*([\d,.]+)\s*/M\s*output', text)
-        other = re.search(r'(?:from\s+)?\$\s*[\d,.]+\s*/\s*(?:image|minute|M\s+characters)', text)
+        other = re.search(r'(?:from\s+)?\$\s*[\d,.]+\s*/\s*(?:megapixel-second|image|minute|second|M\s+characters)', text)
         raw_usage = usage.group(1).replace(' ', '') if usage else ''
         numeric = ''
         if raw_usage:
@@ -87,9 +89,12 @@ def parse_cards(html, capture_url, collected_at):
             'output_price_per_million': output_price[1] if output_price else '',
             'currency': 'USD' if input_price or output_price or other else '',
             'other_price_displayed': other[0] if other else '',
+            'usage_last_7_days_displayed': generic_usage[1].replace(' ', '') if generic_usage else '',
+            'usage_unit': generic_usage[2] if generic_usage else '',
+            'price_metadata_displayed': ' | '.join(re.findall(r'\$\s*[\d,.]+\s*/[^|]*?(?=\$|$)', text)),
             'tokens_last_7_days_displayed': raw_usage,
             'tokens_last_7_days_approx': numeric,
-            'usage_window_label': 'last 7 days' if usage else '',
+            'usage_window_label': 'last 7 days' if generic_usage else '',
             'source_url': source, 'archive_url': capture_url,
             'collected_at': collected_at,
         }
@@ -105,7 +110,7 @@ def main():
               'coverage_status': 'unverified', 'observations': [], 'access_errors': [],
               'failed_requests': [], 'http_errors': [], 'javascript_errors': [],
               'console_errors': [], 'review_threshold_models': 500,
-              'responses': [], 'list_observations': [], 'diagnostic_version': 2,
+              'responses': [], 'list_observations': [], 'diagnostic_version': 3, 'parser_version': 'catalog-v3.1',
               'capture_selection': 'one candidate nearest noon UTC; not compared with other captures'}
     with sync_playwright() as p:
         browser = p.chromium.launch()
@@ -131,11 +136,18 @@ def main():
             report['http_status'] = response.status if response else None
             if response is None or response.status >= 400:
                 raise RuntimeError('Page failed; no retry will be attempted.')
+            if not re.search(rf"/web/{DAY.replace('-', '')}\d{{6}}/https://openrouter\.ai/models", page.url):
+                raise RuntimeError('Wrong-day redirect; same-day candidate needs review.')
             # Ten-second checks allow an access error to stop the pilot promptly.
             # Accumulate virtualized cards before scrolling the inner list.
             accumulated = {}
-            for step in range(18):
-                page.wait_for_timeout(10000)
+            stable_bottom = 0
+            previous_count = 0
+            report['stop_reason'] = 'time_budget_reached'
+            started = time.monotonic()
+            for step in range(180):
+                page.wait_for_timeout(10000 if step < 6 else 3000)
+                elapsed = int(time.monotonic() - started)
                 if report['access_errors']:
                     raise RuntimeError('Access error: stopping without retry.')
                 visible_rows = parse_cards(page.content(), page.url, datetime.now(timezone.utc).isoformat())
@@ -143,11 +155,11 @@ def main():
                     old = accumulated.get(row['model_id'], {})
                     accumulated[row['model_id']] = {k: v if v != '' else old.get(k, '') for k, v in row.items()}
                 if step % 3 == 2:
-                    observation = {'elapsed_seconds': (step + 1) * 10,
+                    observation = {'elapsed_seconds': elapsed,
                                    'model_count': len(accumulated),
                                    'currently_rendered': len(visible_rows)}
                     report['observations'].append(observation)
-                    dimensions = page.evaluate("""() => {
+                    dimensions = page.evaluate(r"""() => {
                         const e = document.querySelector('[data-models-scroll-container]');
                         if (!e) return {found: false};
                         const rect = e.getBoundingClientRect();
@@ -162,17 +174,39 @@ def main():
                     report['list_observations'].append(dict(observation, container=dimensions))
                     print(dict(observation, container=dimensions), flush=True)
                     if step in (2, 8, 17):
-                        page.screenshot(path=str(evidence / f'page-{(step+1)*10}s.png'))
-                        (evidence / f'page-{(step+1)*10}s.html').write_text(page.content(), encoding='utf-8')
+                        page.screenshot(path=str(evidence / f'page-{elapsed}s.png'))
+                        (evidence / f'page-{elapsed}s.html').write_text(page.content(), encoding='utf-8')
                 if step >= 5:
-                    scroll = page.evaluate("""() => {
-                        const e = document.querySelector('[data-models-scroll-container="true"]');
-                        if (!e) return {found: false};
+                    scroll = page.evaluate(r"""() => {
+                        let e = document.querySelector('[data-models-scroll-container="true"]');
+                        if (!e) {
+                            const card = [...document.querySelectorAll('li')].find(x =>
+                                /\bby\s/.test(x.innerText) && x.querySelector('a[href*="openrouter.ai/"]'));
+                            let parent = card?.parentElement;
+                            while (parent && parent !== document.body) {
+                                if (parent.clientHeight > 100 && /auto|scroll/.test(getComputedStyle(parent).overflowY)) {
+                                    e = parent; break;
+                                }
+                                parent = parent.parentElement;
+                            }
+                        }
+                        e = e || document.scrollingElement;
                         e.scrollTop += Math.max(300, e.clientHeight * 0.8);
                         return {top: e.scrollTop, height: e.scrollHeight, viewport: e.clientHeight,
                                 at_bottom: e.scrollTop + e.clientHeight >= e.scrollHeight - 5};
                     }""")
                     report['last_scroll'] = scroll
+                    if scroll.get('at_bottom') and len(accumulated) == previous_count and accumulated:
+                        stable_bottom += 1
+                    else:
+                        stable_bottom = 0
+                    previous_count = len(accumulated)
+                    if step >= 11 and stable_bottom >= 3:
+                        report['stop_reason'] = 'bottom_reached_and_count_stable'
+                        break
+                if elapsed >= 180 and not accumulated:
+                    report['stop_reason'] = 'empty_after_three_minutes'
+                    raise RuntimeError('No model cards after three minutes; saved diagnostics.')
             report['final_url'] = page.url
             if not re.search(rf"/web/{DAY.replace('-', '')}\d{{6}}/https://openrouter\.ai/models", page.url):
                 raise RuntimeError('Wrong-day redirect: refusing to write dated CSV.')
@@ -193,7 +227,7 @@ def main():
             if len(rows) < 500:
                 print('::warning::Fewer than 500 models: review archive coverage.')
             report['result'] = 'csv_saved'
-            report['note'] = 'Diagnostic run only. Coverage is unverified; no full-catalog claim.'
+            report['note'] = 'First-pass capture only. Coverage is unverified; candidates not exhaustively compared.'
             print(f'Saved {len(rows)} models; full coverage remains unverified.', flush=True)
         except Exception as exc:
             report['result'] = 'failed'
