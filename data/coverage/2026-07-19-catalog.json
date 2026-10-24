@@ -1,0 +1,268 @@
+{
+  "requested_url": "https://web.archive.org/web/20260719120000/https://openrouter.ai/models",
+  "snapshot_date": "2026-07-19",
+  "coverage_status": "unverified",
+  "observations": [
+    {
+      "elapsed_seconds": 30,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 60,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 90,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 120,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 150,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 180,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 210,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 240,
+      "model_count": 0
+    },
+    {
+      "elapsed_seconds": 270,
+      "model_count": 0
+    }
+  ],
+  "access_errors": [],
+  "failed_requests": [
+    {
+      "url": "https://archive.org/includes/donate.php?as_page=1&platform=wb&referer=https%3A//web.archive.org/web/20260719125608/https%3A//openrouter.ai/models",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121628js_/https://openrouter.ai/cdn-cgi/challenge-platform/scripts/jsd/main.js",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608cs_/https://openrouter.ai/_next/static/chunks/1ps6vf58rxuts.css?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121646mp_/https://openrouter.ai/_next/static/chunks/22meze9sgwndj.css?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121646mp_/https://openrouter.ai/_next/static/chunks/2yyccqd3trd0g.css?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121646mp_/https://openrouter.ai/_next/static/chunks/2c44bti5jxr6d.css?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121648mp_/https://openrouter.ai/_next/static/media/gordita_bold-s.p.34oroyz8swhvs.woff2?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121648mp_/https://openrouter.ai/_next/static/media/gordita_light-s.p.0abofe8_nqup0.woff2?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121648mp_/https://openrouter.ai/_next/static/media/PlusJakartaSans_VariableFont_wght-s.p.07wcpaq0qx7tm.ttf?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121648mp_/https://openrouter.ai/_next/static/media/PlusJakartaSans_Italic_VariableFont_wght-s.p.3v5q-utgq6rvh.ttf?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608mp_/https://openrouter.ai/_next/static/media/gordita_medium-s.p.0siiaza87ll5t.woff2?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608mp_/https://openrouter.ai/_next/static/media/gordita_regular-s.p.0d9aisv3n7j7c.woff2?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/api/frontend/v1/catalog/models",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/api/frontend/v1/provider-filters",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/0k56x3b4zhpex.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&st=javascript-client-react&sv=3.33.0&t=1784465771837&sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&se=1",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/2csfdgp5urhvd.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/9484cf6ecde6707f/script.js",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/3_oki612i71xy.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://clerk.openrouter.ai/npm/@clerk/clerk-js@6/dist/clerk.browser.js",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/2y64u13nh2qov.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125613js_/https://openrouter.ai/_next/static/chunks/35rrjrf4dn2bw.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models?input_modalities=image&_rsc=3ZAVkzOCKh3tQEEZ",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125613js_/https://openrouter.ai/_next/static/chunks/1fnn8e_2pgk4j.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121646js_/https://openrouter.ai/_next/static/chunks/3wuk4rgjlrq2s.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models?input_modalities=video&_rsc=3ZAVkzOCKh3tQEEZ",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models?input_modalities=audio&_rsc=3ZAVkzOCKh3tQEEZ",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models?input_modalities=file&_rsc=3ZAVkzOCKh3tQEEZ",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models?input_modalities=text&_rsc=3ZAVkzOCKh3tQEEZ",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121628/https://openrouter.ai/api/frontend/v1/all-providers",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125614/https://openrouter.ai/api/frontend/v1/models/find?active=true&fmt=cards",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/44e-43n8xzo56.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/0iwp-vdf35bsb.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/2xjzwqxov4h4y.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/2x0cs_zshnhbb.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL",
+      "failure": "net::ERR_HTTP2_SERVER_REFUSED_STREAM"
+    },
+    {
+      "url": "https://web.archive.org/web/20260719121626mp_/https://clerk.openrouter.ai/npm/@clerk/ui@1/dist/ui.browser.js",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://web-static.archive.org/_static/wombatWorkers.js",
+      "failure": "net::ERR_BLOCKED_BY_ORB"
+    },
+    {
+      "url": "https://web-static.archive.org/_static/wombatWorkers.js",
+      "failure": "net::ERR_BLOCKED_BY_ORB"
+    }
+  ],
+  "http_errors": [
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&st=javascript-client-react&sv=3.33.0&t=1784465772391&sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&se=1",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/ingest/flags/?v=2&ip=0&_=1784465772805&ver=1.373.5&compression=base64",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/537s/ag/g/c?v=2&tid=G-R8YZRJS2XN&gtm=45g92e67f0v9122632899za206zd9122632899&_p=1784465768012&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&gdid=dYzg1YT.dNzQzZD&_eu=AAAAAGA&_uip=%3A%3A&cid=1965405976.1784465774&fp=1&frm=0&pscdl=noapi&rcb=19&sr=1440x1000&uaa=x86&uab=64&uafvl=Not%253AA-Brand%3B8.0.0.0%7CChromium%3B156.0.8078.4%7CHeadlessChrome%3B156.0.8078.4&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=en-us&ur=US-CA&_gsid=p25w49ZtwG7S6d9JCNV_yPsc1PrN1347ew&gaf=2&_s=1&tag_exp=115938465~115938468~118897920~118897930~119709549~119773331&sid=1784465773&sct=1&seg=0&dl=https%3A%2F%2Fopenrouter.ai%2Fmodels&dt=&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&gap.gtb=1&tfd=10013",
+      "status": 404
+    },
+    {
+      "url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/537s/ag/g/c?v=2&tid=G-R8YZRJS2XN&gtm=45g92e67f0v9122632899za206zd9122632899&_p=1784465768012&gcd=13l3l3l3l1l1&npa=0&dma=0&gdid=dYzg1YT.dNzQzZD&_eu=AEAAAGQ&_uip=%3A%3A&ae=a&cid=1965405976.1784465774&fp=1&frm=0&pscdl=noapi&rcb=19&sr=1440x1000&uaa=x86&uab=64&uafvl=Not%253AA-Brand%3B8.0.0.0%7CChromium%3B156.0.8078.4%7CHeadlessChrome%3B156.0.8078.4&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=en-us&ur=US-CA&_gsid=p25w49ZtwG7S6d9JCNV_yPsc1PrN1347ew&gaf=2&_s=2&tag_exp=115938465~115938468~118897920~118897930~119709549~119773331&sid=1784465773&sct=1&seg=0&dl=https%3A%2F%2Fopenrouter.ai%2Fmodels&dt=&en=scroll&gap.gtb=1&epn.percent_scrolled=90&_et=12&tfd=15028",
+      "status": 404
+    }
+  ],
+  "javascript_errors": [
+    "Minified React error #418; visit https://web.archive.org/web/20260719121645/https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+    "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'https://web-static.archive.org/_static/wombatWorkers.js' failed to load.",
+    "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'https://web-static.archive.org/_static/wombatWorkers.js' failed to load."
+  ],
+  "console_errors": [
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "Failed to load resource: net::ERR_HTTP2_SERVER_REFUSED_STREAM",
+    "ChunkLoadError: Failed to load chunk /_next/static/chunks/1ps6vf58rxuts.css?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL from module 398171\n    at https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/turbopack-03ag3jh-b0v7v.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL:10:6670\n    at async Promise.all (index 8)",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    " ERROR  [Statsig] A networking error occurred during POST request to /api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&st=javascript-client-react&sv=3.33.0&t=1784465772391&sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&se=1. NetworkError: NetworkError: /api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&st=javascript-client-react&sv=3.33.0&t=1784465772391&sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&se=1 <!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <title>Wayback Machine</title>\n    <script>\n    /*\n    @licstart  The following is the entire license notice for the JavaScript code in this page.\n\n    Copyright (C) 2020 Internet Archive\n\n    The JavaScript code in this page is free software: you can\n    redistribute it and/or modify it under the terms of the GNU Affero\n    General Public License as published by the Free Software\n    Foundation, either version 3 of the License, or (at your option)\n    any later version.  The code is distributed WITHOUT ANY WARRANTY;\n    without even the implied warranty of MERCHANTABILITY or FITNESS\n    FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.\n\n    As additional permission under GNU AGPL version 3 section 7, you\n    may distribute non-source (e.g., minimized or compacted) forms of\n    that code without the copy of the GNU AGPL normally required by\n    section 4, provided you include this license notice and a URL\n    through which recipients can access the Corresponding Source.\n\n    @licend  The above is the entire license notice for the JavaScript code in this page.\n    */\n    </script>    <script type=\"text/javascript\">\n      window.webComponentLoaderConfig = {\n      baseUrl: 'https://archive.org',\n      version: '29e56e87'\n      }\n    </script>\n    <!-- is_embedded: True; context: <wayback.replay.core.ReplayContext object at 0x7f8bed240890> -->\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://web-static.archive.org/_static/css/styles.css?v=Zb1uSJFF\" />\n    <script type=\"text/javascript\" src=\"https://web-static.archive.org/_static/js/ui.js?v=7LYlZ-C2\" charset=\"utf-8\"></script>\n    <base target=\"_top\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"https://web-static.archive.org/_static/css/web.css\">\n<script type=\"text/javascript\">\nif (window!=window.top) {\n  $(document).ready(function(){ document.body.classList.add('wb_embedded') });\n}\n</script>\n  </head>\n  <body class=\"navia wb_embedded\">\n  <div class=\"container\">\n    <div class=\"row\" style=\"margin-top: 30px\">\n      <div class=\"col-md-4 col-sm-4 col-xs-4 text-right\">\n\t<div id=\"donation-link\" class=\"web_message\">\n  <a href=\"http://archive.org/donate/?origin=wbwww-CalndrDonateButton\" data-event-click-tracking=\"Wayback|DonateButton\" class=\"beta_button\">DONATE</a>\n</div>\n\n      </div>\n      <div class=\"col-md-4 col-sm-4 col-xs-4 text-center\">\n\t<div class=\"search-toolbar-logo-container\">\n\t  <a href=\"/\"><div class=\"search-toolbar-logo\" alt=\"logo: Internet Archive's Wayback Machine\"></div></a>\n\t</div>\n      </div>\n    </div>\n    <div id=\"errorBorder\">\n      <div id=\"positionHome\">\n\t<div id=\"searchHome\">\n\t  <form name=\"form1\" method=\"get\" action=\"/web/submit\">\n      <input class=\"form-control\" type=\"text\" name=\"url\" value=\"https://openrouter.ai/api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&amp;st=javascript-client-react&amp;sv=3.33.0&amp;t=1784465772391&amp;sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&amp;se=1\" size=\"40\" onfocus=\"javascript:this.focus();this.select();\" >\n\t    <button class=\"btn btn-default\" type=\"submit\" name=\"type\" value=\"replay\">Latest</button>\n\t    <button class=\"btn btn-default\" type=\"submit\" name=\"type\" value=\"urlquery\">Show All</button>\n\t  </form>\n\t</div>\n<div id=\"error\">\n    <div class=\"error-text\">The Wayback Machine has not archived that URL.</div>\n    <div class=\"error-help error-help-proceed\">\n      <p>Click here to search for all archived pages under\n        <a href=\"https://web.archive.org/web/*/https://openrouter.ai/api/frontend/v1/statsig/*\">https://openrouter.ai/api/frontend/v1/statsig/</a>.\n      </p>\n    </div></div>\n      </div>\n    </div>\n  </div>\n    <noscript>\n      <div class=\"no-script-message\">\n        The Wayback Machine requires your browser to support JavaScript, please email <a href=\"mailto:info@archive.org\">info@archive.org</a><br/>if you have any questions about this.\n      </div>\n    </noscript>\n    <footer>\n      <div id=\"footerHome\">\n        <p>\n          The Wayback Machine is an initiative of the\n          <a href=\"//archive.org/\">Internet Archive</a>,\n          a 501(c)(3) non-profit, building a digital library of\n          Internet sites and other cultural artifacts in digital form.\n          <br/>Other <a href=\"//archive.org/projects/\">projects</a> include\n          <a href=\"https://openlibrary.org/\">Open Library</a> &amp;\n          <a href=\"https://archive-it.org\">archive-it.org</a>.\n        </p>\n        <p>\n          Your use of the Wayback Machine is subject to the Internet Archive's\n          <a href=\"//archive.org/about/terms.php\">Terms of Use</a>.\n        </p>\n      </div>\n    </footer>\n  </body>\n</html> NetworkError: NetworkError: /api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&st=javascript-client-react&sv=3.33.0&t=1784465772391&sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&se=1 <!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <title>Wayback Machine</title>\n    <script>\n    /*\n    @licstart  The following is the entire license notice for the JavaScript code in this page.\n\n    Copyright (C) 2020 Internet Archive\n\n    The JavaScript code in this page is free software: you can\n    redistribute it and/or modify it under the terms of the GNU Affero\n    General Public License as published by the Free Software\n    Foundation, either version 3 of the License, or (at your option)\n    any later version.  The code is distributed WITHOUT ANY WARRANTY;\n    without even the implied warranty of MERCHANTABILITY or FITNESS\n    FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.\n\n    As additional permission under GNU AGPL version 3 section 7, you\n    may distribute non-source (e.g., minimized or compacted) forms of\n    that code without the copy of the GNU AGPL normally required by\n    section 4, provided you include this license notice and a URL\n    through which recipients can access the Corresponding Source.\n\n    @licend  The above is the entire license notice for the JavaScript code in this page.\n    */\n    </script>    <script type=\"text/javascript\">\n      window.webComponentLoaderConfig = {\n      baseUrl: 'https://archive.org',\n      version: '29e56e87'\n      }\n    </script>\n    <!-- is_embedded: True; context: <wayback.replay.core.ReplayContext object at 0x7f8bed240890> -->\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://web-static.archive.org/_static/css/styles.css?v=Zb1uSJFF\" />\n    <script type=\"text/javascript\" src=\"https://web-static.archive.org/_static/js/ui.js?v=7LYlZ-C2\" charset=\"utf-8\"></script>\n    <base target=\"_top\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"https://web-static.archive.org/_static/css/web.css\">\n<script type=\"text/javascript\">\nif (window!=window.top) {\n  $(document).ready(function(){ document.body.classList.add('wb_embedded') });\n}\n</script>\n  </head>\n  <body class=\"navia wb_embedded\">\n  <div class=\"container\">\n    <div class=\"row\" style=\"margin-top: 30px\">\n      <div class=\"col-md-4 col-sm-4 col-xs-4 text-right\">\n\t<div id=\"donation-link\" class=\"web_message\">\n  <a href=\"http://archive.org/donate/?origin=wbwww-CalndrDonateButton\" data-event-click-tracking=\"Wayback|DonateButton\" class=\"beta_button\">DONATE</a>\n</div>\n\n      </div>\n      <div class=\"col-md-4 col-sm-4 col-xs-4 text-center\">\n\t<div class=\"search-toolbar-logo-container\">\n\t  <a href=\"/\"><div class=\"search-toolbar-logo\" alt=\"logo: Internet Archive's Wayback Machine\"></div></a>\n\t</div>\n      </div>\n    </div>\n    <div id=\"errorBorder\">\n      <div id=\"positionHome\">\n\t<div id=\"searchHome\">\n\t  <form name=\"form1\" method=\"get\" action=\"/web/submit\">\n      <input class=\"form-control\" type=\"text\" name=\"url\" value=\"https://openrouter.ai/api/frontend/v1/statsig/initialize?k=client-yNaYnqhQvc4txEdMwVYDYaNmHdIJSJ7fesWgJB1PGle&amp;st=javascript-client-react&amp;sv=3.33.0&amp;t=1784465772391&amp;sid=9b5ee2a9-a977-4aeb-a8ba-5ab30cb8e72a&amp;se=1\" size=\"40\" onfocus=\"javascript:this.focus();this.select();\" >\n\t    <button class=\"btn btn-default\" type=\"submit\" name=\"type\" value=\"replay\">Latest</button>\n\t    <button class=\"btn btn-default\" type=\"submit\" name=\"type\" value=\"urlquery\">Show All</button>\n\t  </form>\n\t</div>\n<div id=\"error\">\n    <div class=\"error-text\">The Wayback Machine has not archived that URL.</div>\n    <div class=\"error-help error-help-proceed\">\n      <p>Click here to search for all archived pages under\n        <a href=\"https://web.archive.org/web/*/https://openrouter.ai/api/frontend/v1/statsig/*\">https://openrouter.ai/api/frontend/v1/statsig/</a>.\n      </p>\n    </div></div>\n      </div>\n    </div>\n  </div>\n    <noscript>\n      <div class=\"no-script-message\">\n        The Wayback Machine requires your browser to support JavaScript, please email <a href=\"mailto:info@archive.org\">info@archive.org</a><br/>if you have any questions about this.\n      </div>\n    </noscript>\n    <footer>\n      <div id=\"footerHome\">\n        <p>\n          The Wayback Machine is an initiative of the\n          <a href=\"//archive.org/\">Internet Archive</a>,\n          a 501(c)(3) non-profit, building a digital library of\n          Internet sites and other cultural artifacts in digital form.\n          <br/>Other <a href=\"//archive.org/projects/\">projects</a> include\n          <a href=\"https://openlibrary.org/\">Open Library</a> &amp;\n          <a href=\"https://archive-it.org\">archive-it.org</a>.\n        </p>\n        <p>\n          Your use of the Wayback Machine is subject to the Internet Archive's\n          <a href=\"//archive.org/about/terms.php\">Terms of Use</a>.\n        </p>\n      </div>\n    </footer>\n  </body>\n</html>\n    at a.<anonymous> (https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/1_ehx22fdrdvu.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL:10:27895)\n    at Generator.next (<anonymous>)\n    at a (https://web.archive.org/web/20260719125608js_/https://openrouter.ai/_next/static/chunks/1_ehx22fdrdvu.js?dpl=dpl_465UtHgwQXeBEHvvgyjjYk3i41yL:10:24692)",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ],
+  "review_threshold_models": 500,
+  "capture_selection": "one candidate nearest noon UTC; not compared with other captures",
+  "http_status": 200,
+  "final_url": "https://web.archive.org/web/20260719125608/https://openrouter.ai/models",
+  "result": "failed",
+  "error": "No model cards detected.",
+  "collected_at": "2026-10-24T03:39:17.579594+00:00",
+  "visible_controls": [],
+  "scroll_containers": []
+}
