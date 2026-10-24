@@ -1,0 +1,75 @@
+name: Wayback first week
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wayback-collector
+  cancel-in-progress: false
+
+jobs:
+  first-week:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install browser and parser
+        run: |
+          python -m pip install playwright beautifulsoup4
+          python -m playwright install --with-deps chromium
+      - name: Inspect July 19 through July 25 sequentially
+        run: |
+          python -u - <<'PY'
+          import json
+          import os
+          import subprocess
+          import time
+          from datetime import date, timedelta
+          from pathlib import Path
+
+          for offset in range(7):
+              day = (date(2026, 7, 19) + timedelta(days=offset)).isoformat()
+              report_path = Path(f'data/coverage/{day}-catalog.json')
+              csv_path = Path(f'data/catalog/{day}.csv')
+              if report_path.exists() and csv_path.exists():
+                  previous = json.loads(report_path.read_text())
+                  if previous.get('result') == 'csv_saved':
+                      print(f'Skipping saved date: {day}', flush=True)
+                      continue
+              print(f'Inspecting {day}', flush=True)
+              env = dict(os.environ, SNAPSHOT_DATE=day)
+              result = subprocess.run(['python', '-u', 'scripts/catalog_pilot.py'], env=env)
+              if report_path.exists():
+                  report = json.loads(report_path.read_text())
+                  if report.get('access_errors'):
+                      raise SystemExit('Access error: stopping the entire batch. Do not immediately rerun.')
+              if result.returncode:
+                  print(f'::warning::{day} failed; see coverage report. No same-day retry.', flush=True)
+              if offset < 6:
+                  time.sleep(60)
+          PY
+      - name: Commit CSVs and coverage reports
+        if: always()
+        run: |
+          if [ ! -d data ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if [ -d data/catalog ]; then git add data/catalog; fi
+          if [ -d data/coverage ]; then git add data/coverage; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Save July 19-25 catalog pilot and coverage reports'
+          git push
+      - name: Save diagnostic artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: wayback-first-week
+          path: pilot-output/
+          retention-days: 7
+.github/workflows/first-week.yml
