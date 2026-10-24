@@ -8,7 +8,7 @@ from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup
 
-DAY = os.environ.get('SNAPSHOT_DATE', '2026-10-18')
+DAY = os.environ.get('SNAPSHOT_DATE', '2026-07-19')
 # Request the capture nearest noon; reject redirects to another calendar day.
 URL = os.environ.get('SNAPSHOT_URL',
     f"https://web.archive.org/web/{DAY.replace('-', '')}120000/https://openrouter.ai/models")
@@ -22,15 +22,41 @@ def original_url(href):
 def parse_cards(html, capture_url, collected_at):
     soup = BeautifulSoup(html, 'html.parser')
     records = {}
-    for card in soup.select('li'):
-        if not card.select_one('[aria-label="Pin model"]'):
+    cards = []
+    seen_cards = set()
+    for anchor in soup.select('a[href]'):
+        parts = urlsplit(original_url(anchor['href'])).path.strip('/').split('/')
+        if len(parts) != 2 or not anchor.get_text(strip=True):
             continue
+        for parent in anchor.parents:
+            if parent.name not in ('li', 'div', 'article'):
+                continue
+            text = parent.get_text(' ', strip=True)
+            if not re.search(r'\bby\s+', text):
+                continue
+            creator_links = [a for a in parent.select('a[href]')
+                             if len(urlsplit(original_url(a['href'])).path.strip('/').split('/')) == 1
+                             and a.get_text(strip=True)]
+            if not any(re.search(r'\bby\s+' + re.escape(a.get_text(' ', strip=True)), text) for a in creator_links):
+                continue
+            model_ids = set()
+            for a in parent.select('a[href]'):
+                path = urlsplit(original_url(a['href'])).path.strip('/').split('/')
+                if len(path) == 2:
+                    model_ids.add('/'.join(path))
+            if len(model_ids) != 1:
+                break
+            if id(parent) not in seen_cards:
+                cards.append(parent)
+                seen_cards.add(id(parent))
+            break
+    for card in cards:
         model_link = None
         creator = ''
         for link in card.select('a[href]'):
             original = original_url(link['href'])
             parts = urlsplit(original).path.strip('/').split('/')
-            if len(parts) == 2 and model_link is None:
+            if len(parts) == 2 and model_link is None and link.get_text(strip=True):
                 model_link = (link, original, '/'.join(parts))
             elif len(parts) == 1 and link.get_text(strip=True):
                 creator = link.get_text(strip=True)
@@ -42,9 +68,9 @@ def parse_cards(html, capture_url, collected_at):
         release = next((s.get_text(' ', strip=True) for s in card.select('span')
                         if re.fullmatch(r'[A-Z][a-z]{2} \d{1,2}, \d{4}', s.get_text(' ', strip=True))), '')
         usage = re.search(r'\b([\d,.]+\s*[KMBT]?)\s+tokens\b', text)
-        input_price = re.search(r'\$([\d,.]+)\s*/M\s*input', text)
-        output_price = re.search(r'\$([\d,.]+)\s*/M\s*output', text)
-        other = re.search(r'from\s+\$[\d,.]+\s*/\w+', text)
+        input_price = re.search(r'\$\s*([\d,.]+)\s*/M\s*input', text)
+        output_price = re.search(r'\$\s*([\d,.]+)\s*/M\s*output', text)
+        other = re.search(r'(?:from\s+)?\$\s*[\d,.]+\s*/\s*(?:image|minute|M\s+characters)', text)
         raw_usage = usage.group(1).replace(' ', '') if usage else ''
         numeric = ''
         if raw_usage:
@@ -102,23 +128,40 @@ def main():
             if response is None or response.status >= 400:
                 raise RuntimeError('Page failed; no retry will be attempted.')
             # Ten-second checks allow an access error to stop the pilot promptly.
-            # First allow three minutes, then six spaced scroll/loading checks.
-            for step in range(27):
+            # Accumulate virtualized cards before scrolling the inner list.
+            accumulated = {}
+            for step in range(36):
                 page.wait_for_timeout(10000)
                 if report['access_errors']:
                     raise RuntimeError('Access error: stopping without retry.')
-                if step >= 18 and step % 2 == 0:
-                    page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
+                visible_rows = parse_cards(page.content(), page.url, datetime.now(timezone.utc).isoformat())
+                for row in visible_rows:
+                    old = accumulated.get(row['model_id'], {})
+                    accumulated[row['model_id']] = {k: v if v != '' else old.get(k, '') for k, v in row.items()}
                 if step % 3 == 2:
-                    rows = parse_cards(page.content(), page.url, '')
-                    observation = {'elapsed_seconds': (step + 1) * 10, 'model_count': len(rows)}
+                    observation = {'elapsed_seconds': (step + 1) * 10,
+                                   'model_count': len(accumulated),
+                                   'currently_rendered': len(visible_rows)}
                     report['observations'].append(observation)
                     print(observation, flush=True)
+                if step >= 5:
+                    scroll = page.evaluate("""() => {
+                        const lists = [...document.querySelectorAll('body *')].filter(e =>
+                            e.clientHeight > 200 && e.scrollHeight > e.clientHeight + 100 &&
+                            /auto|scroll/.test(getComputedStyle(e).overflowY));
+                        const e = lists.sort((a,b) => b.scrollHeight-a.scrollHeight)[0]
+                            || document.scrollingElement;
+                        e.scrollTop += Math.max(300, e.clientHeight * 0.8);
+                        return {top: e.scrollTop, height: e.scrollHeight, viewport: e.clientHeight,
+                                at_bottom: e.scrollTop + e.clientHeight >= e.scrollHeight - 5};
+                    }""")
+                    report['last_scroll'] = scroll
             report['final_url'] = page.url
             if not re.search(rf"/web/{DAY.replace('-', '')}\d{{6}}/https://openrouter\.ai/models", page.url):
                 raise RuntimeError('Wrong-day redirect: refusing to write dated CSV.')
-            collected = datetime.now(timezone.utc).isoformat()
-            rows = parse_cards(page.content(), page.url, collected)
+            for row in parse_cards(page.content(), page.url, datetime.now(timezone.utc).isoformat()):
+                accumulated.setdefault(row['model_id'], row)
+            rows = list(accumulated.values())
             if not rows:
                 raise RuntimeError('No model cards detected.')
             folder = Path('data/catalog')
